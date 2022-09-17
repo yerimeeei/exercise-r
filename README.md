@@ -41,7 +41,7 @@ The clinical data is in `data/pheno_sclc_ucologne_2015.tsv`.
 
 1. Define two groups of tumours as early stage (stages I-II) vs. advanced stage
    tumours (stages III-IV), while excluding samples missing stage information.
-2. Identify genes that differentially expressed in early vs.advanced stage
+2. Identify genes that differentially expressed in early vs. advanced stage
    tumours using an appropriate R package.
 
 ## Integrative analysis
