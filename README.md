@@ -14,7 +14,7 @@ The mutation data is in `data/mutations_sclc_ucologne_2015.rds`.
    significantly higher proportion of loss-of-function mutations
    (excluding mutations with uncertain effects),
    compared to other genes.
-4. Identify candidate tumour suppressor genes using this statistical gene,
+4. Identify candidate tumour suppressor genes using this statistical test,
    adjusting for multiple hypothesis testing.
    The output table should contain:
      - gene symbol
@@ -30,7 +30,7 @@ The mutation data is in `data/mutations_sclc_ucologne_2015.rds`.
 The transcriptomic data is in `data/expr_sclc_ucologne_2015.rds`.
 
 1. Perform an appropriate log transformation on the data.
-2. Implement a median polish algorithm from scratch.
+2. Implement a median polish algorithm from scartch.
 3. Compare the residuals of your algorithm and `stats::medpolish`.
 4. Plot heatmaps of the results before and after median polish.
 5. Output the median polished residual matrix as the normalized transcriptomic data.
@@ -53,5 +53,5 @@ The structural variant data is in `data/sv_sclc_ucologne_2015.tsv`.
 2. Identify structural variants that satisfy the following critiera:
       - The involved pair of genes both have elevated expression levels
         in the affected samples compared to unaffected samples.
-      - The second gene in the pair is in frame..
+      - The second gene in the pair is in frame.
 
