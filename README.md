@@ -48,10 +48,10 @@ The clinical data is in `data/pheno_sclc_ucologne_2015.tsv`.
 
 The structural variant data is in `data/sv_sclc_ucologne_2015.tsv`.
 
-1. For each gene involved in a structural variant, determine the expression 
-   level of the gene in the sample that harbours the structural variant.
-2. Identify structural variants that satisfy the following critiera:
+1. For each gene involved in a structural variant (SV), determine the expression 
+   level of the gene in the sample that harbours the SV.
+2. Identify SVs that satisfy the following critiera:
       - The involved pair of genes both have elevated expression levels
-        in the affected samples compared to unaffected samples.
-      - The second gene in the pair is in frame..
+        in samples with the SV compared to samples without the SV.
+      - The second gene in the pair is in frame.
 
