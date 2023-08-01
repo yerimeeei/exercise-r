@@ -87,14 +87,15 @@ stat_test <- function(z_test, gene_row){
 	p_b <- mean(z_test[-gene_row, "proportion"])  
 	n_2 <- sum(z_test[-gene_row, "freq"])  
 	p <- sum(z_test[, "loss_of_function"]) / sum(z_test[, "freq"])  
-	q <- 1-p  z_score <- p_a*p_b/(sqrt(p*q/n_1+p*q/n_2))  
-	return(c(z_test[gene_row,"gene"], z_score, p, q))
+	q <- 1-p
+	z_score <- p_a*p_b/(sqrt(p*q/n_1+p*q/n_2))  
+	return(c(z_test[gene_row,"gene"], z_score))
 }
 ```
 
 4. **Identify candidate tumour suppressor genes using this statistical test, adjusting for multiple hypothesis testing. The output table should contain:**
     - **gene symbol**
-    - **an estimate of effect size (Z score)**
+    - **an estimate of effect size**
     - **p value**
     - **q value**
 
@@ -104,14 +105,12 @@ for (gene_row in 1:38){
 	candidates <- rbind(candidates, stat_test(z_test, gene_row))
 }
 colnames(candidates)[1] <- "gene_symbol"
-colnames(candidates)[2] <- "sestimate_of_effect_size"
+colnames(candidates)[2] <- "estimate_of_effect_size"
 colnames(candidates)[3] <- "p_value"
 colnames(candidates)[4] <- "q_value"
 ```
 
-<img width="787" alt="Screenshot_2023-07-30_at_6 02 25_PM" src="https://github.com/yerimeeei/exercise-r/assets/134043926/2ee71402-5b19-4794-82dc-2bafd561e654">
-
-- z score (estimate of effect size) ≥ 1.96, the difference is significant at 5%.
+- z score ≥ 1.96, the difference is significant at 5%.
 - Thus, only RB1 gene is significant at 5% resulted by z-test.
 5. **Perform a literature search and explain the function of each candidate gene in the context of cancer, as well as specifically in small cell lung cancer.**
 
