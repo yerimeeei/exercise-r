@@ -1,6 +1,4 @@
-# Programming exercise for R
-
-## Mutation data analysis
+# Mutation data analysis
 
 [mutation data analysis](https://www.notion.so/mutation-data-analysis-6bbe1846a5f744c292163a47c02a2f44?pvs=21)
 
