@@ -125,6 +125,15 @@ heatmap_before
 
 ![pheatmap_transcriptomic_cpm_(scale)](https://github.com/yerimeeei/exercise-r/assets/134043926/9ab4864f-9c87-4d95-b91f-68f5e848add0)
 
+```r
+heatmap_after <- pheatmap(transcriptomic_medpolish, scale = "row",
+                          main = "Transcriptomic data Heatmap after medianpolish",
+                          xlab = "Samples",
+                          ylab = "Genes",
+                          fontsize_col = 7, fontsize_row = 7)
+heatmap_after
+```
+
 - heatmap after median polish
 
 ![pheatmap_transcriptomic_cpm_after_medianpolish](https://github.com/yerimeeei/exercise-r/assets/134043926/5b27c7c3-605d-4152-8c00-29c33438cd27)
