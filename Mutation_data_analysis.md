@@ -1,4 +1,6 @@
-# Mutation data analysis
+# Programming exercise for R
+
+## Mutation data analysis
 
 [mutation data analysis](https://www.notion.so/mutation-data-analysis-6bbe1846a5f744c292163a47c02a2f44?pvs=21)
 
@@ -29,7 +31,7 @@ samples <- frequency_sample[frequency_sample$freq >= quantile(frequency_sample$f
 samples$sample_id
 ```
 
-<img width="248" alt="Screenshot_2023-07-30_at_2 44 56_PM" src="https://github.com/yerimeeei/exercise-r/assets/134043926/dda0b39a-c057-4132-ab50-afcb40aab3f5">
+<img width="248" alt="Screenshot_2023-07-30_at_2 44 56_PM" src="https://github.com/yerimeeei/exercise-r/assets/134043926/61b4716e-848f-4be0-9131-ebfcc9925540">
 
 - TTN, TP53, MUC16, RB1, RYR2, LRP1B, ZFHX4, CSMD3, USH2A, NAV3 = SYNE1
 - "sclc_ucologne_2015_S01020" "sclc_ucologne_2015_S02344" "sclc_ucologne_2015_S02285"
@@ -76,7 +78,7 @@ df_stat_test <- df_stat_test[-c(2)]
 df_stat_test[is.na(df_stat_test)] <- 0
 df_stat_test$proportion <- df_stat_test$loss_of_function/df_stat_test$freq
 
-### z test only for n >= 30 
+### two proportion z test only for n >= 30 
 z_test <- df_stat_test[df_stat_test$freq >= 30,]
 z_test <- z_test[order(z_test$proportion, decreasing = TRUE),]
 stat_test <- function(z_test, gene_row){  
@@ -85,9 +87,8 @@ stat_test <- function(z_test, gene_row){
 	p_b <- mean(z_test[-gene_row, "proportion"])  
 	n_2 <- sum(z_test[-gene_row, "freq"])  
 	p <- sum(z_test[, "loss_of_function"]) / sum(z_test[, "freq"])  
-	q <- 1-p
-	z_score <- p_a*p_b/(sqrt(p*q/n_1+p*q/n_2))  
-	return(c(z_test[gene_row,"gene"], z_score))
+	q <- 1-p  z_score <- p_a*p_b/(sqrt(p*q/n_1+p*q/n_2))  
+	return(c(z_test[gene_row,"gene"], z_score, p, q))
 }
 ```
 
@@ -99,17 +100,37 @@ stat_test <- function(z_test, gene_row){
 
 ```r
 candidates <- data.frame()
-for (gene_row in 1:38){  
-	candidates <- rbind(candidates, stat_test(z_test, gene_row))
+for (gene_row in 1:38){
+    candidates <- rbind(candidates, stat_test(z_test, gene_row))
 }
 colnames(candidates)[1] <- "gene_symbol"
 colnames(candidates)[2] <- "estimate_of_effect_size"
-colnames(candidates)[3] <- "p_value"
-colnames(candidates)[4] <- "q_value"
+
+convert_z_score <- function(z, one.sided=NULL) {
+  if(is.null(one.sided)) {
+    pval = pnorm(-abs(z))
+    pval = 2 * pval
+  } else if(one.sided=="-") {
+    pval = pnorm(z)
+  } else {
+    pval = pnorm(-z)
+  }
+  return(pval)
+}
+p_value <- convert_z_score(as.numeric(candidates$estimate_of_effect_size))
+library(qvalue)
+q_value <- qvalue(p_value)
+q_value <- as.numeric(q_value$qvalues)
+
+candidates <- cbind(candidates, p_value, q_value)
+colnames(candidates)[3] <- "p-value"
+colnames(candidates)[4] <- "q-value"
 ```
 
-- z score ≥ 1.96, the difference is significant at 5%.
-- Thus, only RB1 gene is significant at 5% resulted by z-test.
+<img width="552" alt="Screenshot_2023-08-12_at_12 06 16_AM" src="https://github.com/yerimeeei/exercise-r/assets/134043926/789ca4b2-d535-45d0-a1cc-de0472372ba0">
+
+- z score (estimate of effect size) ≥ 1.96, the difference is significant at 5%.
+- Thus, RB1, MLL2, TP53 genes are significant at 5% resulted by z-test.
 5. **Perform a literature search and explain the function of each candidate gene in the context of cancer, as well as specifically in small cell lung cancer.**
 
 ### **Retinoblastoma 1 (RB1) gene**
