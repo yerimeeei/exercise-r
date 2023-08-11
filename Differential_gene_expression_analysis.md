@@ -52,3 +52,18 @@ sig_genes <- subset(res, padj < 0.7 & abs(log2FoldChange) > 1)
 ### G**enes that differentially expressed in early vs. advanced stage tumours**
 
 : ANXA1, C8orf84, ECM1, AMIGO2
+- Differentially expressed in early stage tumours: ECM1, AMIGO2
+- Differentially expressed in advanced stage tumors: ANXA1, C8orf84
+
+```r
+library(EnhancedVolcano)
+#selected = c("ANXA1", "C8orf84", "ECM1", "AMIGO2")
+volcano_plot <- EnhancedVolcano(res, x = "log2FoldChange",y = "padj",
+                                ylim = c(0,1), pCutoff = 0.7,
+                                lab = row.names(res), #selectLab = selected,
+                                title = 'Volcano Plot of early vs. advanced stage tumours')
+volcano_plot
+```
+
+![volplot](https://github.com/yerimeeei/exercise-r/assets/134043926/a37ca5c6-aa56-4f1b-b3a9-82ec272076a0)
+
